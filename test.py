@@ -18,7 +18,8 @@ if __name__ == '__main__':
         ),
         params=dict(
             prompt="the product is for sale"
-        )
+        ),
+        waitResult=True
     )
 
     import pdb; pdb.set_trace()
