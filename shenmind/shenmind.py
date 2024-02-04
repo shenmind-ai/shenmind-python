@@ -1,8 +1,9 @@
 import requests
 import os
 import time
+import json
 from .upload import UploadFile
-from .constant import createPredictionUrl, queryPredictionUrl
+from .constant import createPredictionUrl, queryPredictionUrl, cancelPredictionUrl
 
 
 def run(
@@ -19,13 +20,13 @@ def run(
     # run 
     apiToken = os.environ.get('SHENMIND_API_TOKEN')
     headers = {
-        'Authorization': apiToken
+        'Authorization': apiToken,
+        'Content-Type': 'application/json'
     }
 
     data['modelId'] = modelId
     data.update(params)
-
-    response = requests.post(createPredictionUrl, data=data, headers=headers)
+    response = requests.post(createPredictionUrl, data=json.dumps(data), headers=headers)
 
     if response.status_code == 200:
         if not waitResult:
@@ -57,4 +58,18 @@ def getPredictionOutput(predictionId):
         raise Exception('fail to get prediction: {}'.format(response.text))
 
 
-        
+def cancelPrediction(predictionId):
+    apiToken = os.environ.get('SHENMIND_API_TOKEN')
+    headers = {
+        'Authorization': apiToken
+    }
+    data = {
+        'predictionId': predictionId
+    }
+    response = requests.post(cancelPredictionUrl, data=data, headers=headers)
+
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception('fail to cancel prediction: {}'.format(response.text))
