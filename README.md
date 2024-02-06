@@ -56,4 +56,9 @@ prediction = shenmind.getPredictionOutput(predictionId)
 
 ````
 
+#### 4. Cancel Prediction
+```python
+import shenmind
+prediction = shenmind.cancelPrediction(predictionId)
 
+```
