@@ -14,8 +14,11 @@ def run(
 ):
     data = dict()
     for key, filepath in files.items():
-        storageId = UploadFile(filepath)
-        data[key] = storageId[0]
+        if filepath.startswith('http'):
+            data[key] = filepath
+        else:
+            storageId = UploadFile(filepath)
+            data[key] = storageId[0]
         
     # run 
     apiToken = os.environ.get('SHENMIND_API_TOKEN')
@@ -35,7 +38,7 @@ def run(
             predictionId = response.json()['data']['predictionId']
             while True:
                 prediction = getPredictionOutput(predictionId)
-                if prediction['status'] == 'succeeded':
+                if prediction['status'] in ['succeeded', 'failed', 'canceled']:
                     return prediction
                 else:
                     time.sleep(1)
