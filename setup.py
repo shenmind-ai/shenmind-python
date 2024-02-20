@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='shenmind',  # 包的名称
-    version='0.1.0',  # 版本号
+    version='0.1.1',  # 版本号
     author='shenmind',  # 作者姓名
     author_email='sdruc0611@gmail.com',  # 作者邮箱
     description='A Python package for shenmind',  # 包的描述信息
