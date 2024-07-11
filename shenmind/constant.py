@@ -1,5 +1,5 @@
+permissionUrl = "https://shenmind.com/apiv2/private/upload/permission"
 
-uploadUrl = 'https://shenmind.com/api/protected/storage/uploadFile'
-createPredictionUrl = 'https://shenmind.com/api/protected/prediction/createPrediction'
-queryPredictionUrl = 'https://shenmind.com/api/protected/prediction/queryPrediction'
-cancelPredictionUrl = 'https://shenmind.com/api/protected/prediction/cancelPrediction'
+createPredictionUrl = 'https://shenmind.com/apiv2/private/prediction'
+queryPredictionUrl = 'https://shenmind.com/apiv2/prediction/outputs'
+cancelPredictionUrl = 'https://shenmind.com/apiv2/private/prediction/cancel'

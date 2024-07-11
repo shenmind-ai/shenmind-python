@@ -18,24 +18,25 @@ def run(
             data[key] = filepath
         else:
             storageId = UploadFile(filepath)
-            data[key] = storageId[0]
+            data[key] = storageId
         
     # run 
     apiToken = os.environ.get('SHENMIND_API_TOKEN')
     headers = {
-        'Authorization': apiToken,
+        'Authorization': f'Bearer {apiToken}',
         'Content-Type': 'application/json'
     }
 
-    data['modelId'] = modelId
+    data['modelID'] = modelId
     data.update(params)
     response = requests.post(createPredictionUrl, data=json.dumps(data), headers=headers)
 
+    print("response.json()", response.json())
     if response.status_code == 200:
         if not waitResult:
-            return response.json()['data']['predictionId']
+            return response.json()['data']['predictionID']
         else:
-            predictionId = response.json()['data']['predictionId']
+            predictionId = response.json()['data']['predictionID']
             while True:
                 prediction = getPredictionOutput(predictionId)
                 if prediction['status'] in ['succeeded', 'failed', 'canceled']:
@@ -48,10 +49,10 @@ def run(
 def getPredictionOutput(predictionId):
     apiToken = os.environ.get('SHENMIND_API_TOKEN')
     headers = {
-        'Authorization': apiToken
+        'Authorization': f'Bearer {apiToken}'
     }
     data = {
-        'predictionId': predictionId
+        'predictionID': predictionId
     }
     response = requests.get(queryPredictionUrl, params=data, headers=headers)
 
@@ -64,11 +65,14 @@ def getPredictionOutput(predictionId):
 def cancelPrediction(predictionId):
     apiToken = os.environ.get('SHENMIND_API_TOKEN')
     headers = {
-        'Authorization': apiToken
+        'Authorization': f'Bearer {apiToken}'
     }
     data = {
-        'predictionId': predictionId
+        'predictionID': predictionId
     }
+
+    print("data", data)
+
     response = requests.post(cancelPredictionUrl, data=data, headers=headers)
 
 
