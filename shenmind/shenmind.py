@@ -31,7 +31,6 @@ def run(
     data.update(params)
     response = requests.post(createPredictionUrl, data=json.dumps(data), headers=headers)
 
-    print("response.json()", response.json())
     if response.status_code == 200:
         if not waitResult:
             return response.json()['data']['predictionID']
@@ -71,7 +70,6 @@ def cancelPrediction(predictionId):
         'predictionID': predictionId
     }
 
-    print("data", data)
 
     response = requests.post(cancelPredictionUrl, data=data, headers=headers)
 
